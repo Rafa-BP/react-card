@@ -52,31 +52,34 @@ function App() {
   }, [difficulty]);
 
   return (
-    <>
-      <h1>Memory Card Game</h1>
-      <h2>Select Dificulty: </h2>
-      <div id="difSelector">
-        <button onClick={HandleDifChange}>Easy</button>
-        <button onClick={HandleDifChange}>Medium</button>
-        <button onClick={HandleDifChange}>Hard</button>
+    <div id="container">
+      <div id="row">
+        <h1>Memory Card Game</h1>
+        <h2>Select Dificulty: </h2>
+        <div id="difSelector">
+          <button className="btn" onClick={HandleDifChange}>Easy</button>
+          <button className="btn" onClick={HandleDifChange}>Medium</button>
+          <button className="btn"onClick={HandleDifChange}>Hard</button>
+        </div>
+
+        <p>Highest Score: {score[1]}</p>
+        <p>Current Score: {score[0]}</p>
       </div>
 
-      <p>Highest Score: {score[1]}</p>
-      <p>Current Score: {score[0]}</p>
 
-      <main id={`grid-${difficulty.size}`}>
+      <main className="test" id={`grid-${difficulty.size}`}>
         {pokemons.length == difficulty.number
           ? arrayToShuffled(pokemons).map(pokemon => 
-          <div key={pokemon.name}>
+          <div className="poke" key={pokemon.name}>
             <img src={pokemon.sprite} alt={pokemon.name} onClick={HandlePokeClick}/>
-            <p>{pokemon.name}</p>
+            <p id="pokeName">{pokemon.name.toUpperCase()}</p>
           </div>
           )
         : <p>Loading</p>
         }
        
       </main>
-    </>
+    </div>
   );
 }
 
