@@ -1,23 +1,27 @@
 import "./App.css";
 import { useEffect, useState } from "react";
+import {arrayToShuffled} from 'array-shuffle';
 
 function App() {
   const [pokemons, setPokemons] = useState([]);
-  const [difficulty, setDifficulty] = useState({size: "Easy", number: 12})
+  const [selectedPokes, setSelectedPokes] = useState([])
 
-  console.log(pokemons)
+  const [difficulty, setDifficulty] = useState({size: "Easy", number: 12})
+  const [score, setScore] = useState([0, 0])
 
   function HandleDifChange(e) {
-    setDifficulty({size: e.target.textContent, number: () => {
-      switch (e.target.textContent) {
-        case "Easy":
-          return 12
-        case "Medium":
-          return 24
-        case "Hard":
-          return 40
-      }
-    }})
+    setDifficulty({size: e.target.textContent, number: (e.target.textContent === "Easy") ? 12 : (e.target.textContent === "Medium") ? 24 : 40})
+    setScore([0, score[1]])
+  };
+
+  function HandlePokeClick(e) {
+    if (selectedPokes.includes(e.target.alt)) {
+      setScore([0, (score[0] > score[1]) ? score[0] : score[1]])
+      setSelectedPokes([])
+    } else {
+      setScore([score[0] + 1, score[1]])
+      setSelectedPokes([...selectedPokes, e.target.alt])
+    }
   };
 
   useEffect(() => {
@@ -57,19 +61,20 @@ function App() {
         <button onClick={HandleDifChange}>Hard</button>
       </div>
 
-      <p>Highest Score: </p>
-      <p>Current Score: </p>
+      <p>Highest Score: {score[1]}</p>
+      <p>Current Score: {score[0]}</p>
 
       <main id={`grid-${difficulty.size}`}>
-        {pokemons.length === difficulty.number 
-        ? pokemons.map((pokemon) => {
-          <>
-            <img src={pokemon.sprite}/>
+        {pokemons.length == difficulty.number
+          ? arrayToShuffled(pokemons).map(pokemon => 
+          <div key={pokemon.name}>
+            <img src={pokemon.sprite} alt={pokemon.name} onClick={HandlePokeClick}/>
             <p>{pokemon.name}</p>
-          </>
-        })
+          </div>
+          )
         : <p>Loading</p>
         }
+       
       </main>
     </>
   );
