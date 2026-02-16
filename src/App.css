@@ -1,0 +1,35 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+#grid-Easy,
+#grid-Medium,
+#grid-Hard {
+  display: grid;
+
+  width: 80vw;
+  height: 40vh;
+}
+
+#grid-Easy {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+#grid-Medium {
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+}
+
+#grid-Hard {
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+}
+
+#difSelector > *{
+  margin: 0.5rem;
+  padding: 0.2rem;
+}
